@@ -65,4 +65,5 @@ input[type=submit]:hover {
 </body>
 </html>)rawliteral";
 
-bool first_time_check = 0;
+/// @brief System state (0: AP mode for interactive WiFi configuation -- 1: Client mode for connect to server device)
+bool SYSTEM_STATE = 0; 

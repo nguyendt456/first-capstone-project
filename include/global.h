@@ -17,4 +17,4 @@ extern IPAddress GATEWAY;
 extern IPAddress NETMASK;
 extern IPAddress DHCP_RANGE;
 
-extern bool first_time_check;
+extern bool SYSTEM_STATE;
