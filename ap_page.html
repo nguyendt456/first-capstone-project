@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+input[name=wifi_form], select {
+    width: 80%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+input[type=submit] {
+    width: 30%;
+    background-color: #3B71CA;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+input[type=submit]:hover {
+    background-color: #1952ad;
+}
+</style>
+</head>
+<body>
+    <div>
+        <form action="/get">
+          <label for="ssid">SSID</label><br>
+          <input type="text" id="ssid" name="wifi_form" placeholder="SSID">
+            <br>
+          <label for="Password">Password</label> <br>
+          <input type="password" id="password" name="wifi_form" placeholder="Password">
+          <input type="submit" value="Submit">
+        </form>
+    </div>
+</body>
+</html>
