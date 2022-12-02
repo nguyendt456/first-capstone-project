@@ -1,7 +1,13 @@
 #include <main.h>
 
+void SwitchWiFiMode(wifi_mode_t mode) {
+    WiFi.mode(mode);
+    WiFi.begin(SSID.c_str(), PASSWORD.c_str());
+    SYSTEM_STATE = 1;
+}
+
 void ReconnectOnDisconnect(WiFiEvent_t event, WiFiEventInfo_t info) {
-    if (first_time_check == 1) {
+    if (SYSTEM_STATE == 1) {
         Serial.println("WiFi disconnected. Trying to reconnect !");
         WiFi.reconnect();
     }
@@ -31,9 +37,22 @@ void APServerHandle(WiFiEvent_t event, WiFiEventInfo_t info) {
             request->send(200, "text/html", "Get SSID and Password successfully ! <br><a href=\"/\">Return to Home Page</a>");
             cleanupEEPROM();
             credentialWriteToEEPROM();
-            delay(200);
+            delay(10);
             credentialReadFromEEPROM();
+            delay(10);
+            SwitchWiFiMode(WIFI_STA);
         }
     });
-    webServer.begin();
+    if(SYSTEM_STATE == 0) webServer.begin();
+}
+
+void ClientMode(WiFiEvent_t event, WiFiEventInfo_t info) {
+    Serial.print("Mac Address: ");
+    Serial.println(WiFi.macAddress());
+    Serial.print("IP address: ");
+    Serial.println(WiFi.localIP());
+}
+
+void HandleOnConnected(WiFiEvent_t event, WiFiEventInfo_t info) {
+    Serial.println("I am connected. Do something in here");
 }
