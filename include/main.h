@@ -2,7 +2,6 @@
 #define __MAIN
 
 #include <WiFi.h>
-#include <Arduino.h>
 #include <EEPROM.h>
 #include <AsyncTCP.h>
 #include <ESPAsyncWebServer.h>
