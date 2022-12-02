@@ -15,7 +15,6 @@ void credentialWriteToEEPROM() {
     for (int i = 0; i < ssid_len; i++) {
         EEPROM.write(i + 1, AP_SSID[i]);
     }
-    Serial.println(pass_len);
     EEPROM.write(ssid_len + 2, pass_len);
     for (int i = ssid_len + 3; i < pass_len + ssid_len + 3; i++) {
         EEPROM.write(i + 1, AP_PASSWORD[i - (ssid_len + 3)]);
@@ -31,10 +30,18 @@ void credentialReadFromEEPROM() {
         SSID += (char)EEPROM.read(i + 1);
     }
     byte pass_len = EEPROM.read(ssid_len + 2);
-    Serial.println(pass_len);
     for(int i = ssid_len + 3; i < pass_len + ssid_len + 3; i++) {
-        Serial.print(PASSWORD);
-        Serial.print(" ");
         PASSWORD += (char)EEPROM.read(i + 1);
+    }
+}
+
+void WiFiCrentialCheck() {
+    if(SSID == "" && PASSWORD == "") {
+        SSID = DEFAULT_SSID;
+        PASSWORD = DEFAULT_PASSWORD;
+    }
+    else {
+        SYSTEM_STATE = 1;
+        SwitchWiFiMode(WIFI_STA);
     }
 }
