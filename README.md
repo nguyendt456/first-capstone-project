@@ -10,9 +10,14 @@ And could be more than that...
 
 * Asynchronous server for user to enter WiFi credentials.
 * EEPROM to persistent store credential information.
-* Event-driven design for manage and scalable.
+* Event-driven design for good code structure managements and scalable.
+* Press power button for 3 seconds to enter AP mode and re-enter credential WiFi information. (debounce using timer).
 
 ## Prerequisite
+
+**Microprocess board**
+
+* ESP32 dev module (Recommended 1 core module)
 
 **Library:**
 
@@ -21,6 +26,6 @@ And could be more than that...
 * `AsyncTCP`&nbsp;&nbsp;**ESPAsyncWebServer-esphome**
 * `ESPAsyncWebServer`&nbsp; **ESPAsyncWebServer-esphome**
 
-**Environment:**
+**Develop environment:**
 
 * PlatformIO
