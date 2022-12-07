@@ -3,4 +3,4 @@
 void cleanupEEPROM();
 void credentialWriteToEEPROM();
 void credentialReadFromEEPROM();
-void WiFiCrentialCheck();
+bool WiFiCrentialCheck();

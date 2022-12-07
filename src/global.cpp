@@ -5,6 +5,21 @@ AsyncWebServer webServer(80);
 String SSID = "";
 String PASSWORD = "";
 
+bool STA_init_check = 0;
+
+hw_timer_t* timer = NULL;
+portMUX_TYPE timerMux = portMUX_INITIALIZER_UNLOCKED;
+volatile bool timer1_flag = 0;
+volatile int timer1_counter = 0;
+
+volatile bool timer2_flag = 0;
+volatile int timer2_counter = 0;
+
+int power_button_state1 = 1;
+int power_button_state2 = 1;
+int power_button_state3 = 1;
+int power_button_state = 1;
+
 IPAddress IP = {192, 168, 0, 0};
 IPAddress GATEWAY = {192, 168, 1, 0};
 IPAddress NETMASK = {255, 255, 255, 0};

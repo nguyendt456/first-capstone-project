@@ -35,13 +35,20 @@ void credentialReadFromEEPROM() {
     }
 }
 
-void WiFiCrentialCheck() {
+bool WiFiCrentialCheck() {
     if(SSID == "" && PASSWORD == "") {
         SSID = DEFAULT_SSID;
         PASSWORD = DEFAULT_PASSWORD;
+        Serial.println("Fuck off");
+        return 1;
     }
     else {
-        SYSTEM_STATE = 1;
-        SwitchWiFiMode(WIFI_STA);
+        Serial.println("Detected previous password");
+        Serial.println(SSID);
+        Serial.println(PASSWORD);
+        SwitchWiFiSTAMode();
+        timerAlarmEnable(timer);
+        setTimer2(1);
     }
+    return 0;
 }

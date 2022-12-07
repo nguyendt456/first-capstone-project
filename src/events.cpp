@@ -1,13 +1,20 @@
 #include <main.h>
 
-void SwitchWiFiMode(wifi_mode_t mode) {
-    WiFi.mode(mode);
+void SwitchWiFiSTAMode() {
+    WiFi.mode(WIFI_STA);
     WiFi.begin(SSID.c_str(), PASSWORD.c_str());
-    SYSTEM_STATE = 1;
+    SYSTEM_STATE = STA_MODE;
+}
+
+void SwitchWiFiAPMode() {
+    WiFi.mode(WIFI_AP);
+    WiFi.softAP(DEFAULT_SSID, DEFAULT_PASSWORD);
+    WiFi.softAPConfig(IP, GATEWAY, NETMASK, DHCP_RANGE);
+    SYSTEM_STATE = AP_MODE;
 }
 
 void ReconnectOnDisconnect(WiFiEvent_t event, WiFiEventInfo_t info) {
-    if (SYSTEM_STATE == 1) {
+    if (SYSTEM_STATE == STA_MODE) {
         Serial.println("WiFi disconnected. Trying to reconnect !");
         WiFi.reconnect();
     }
@@ -37,13 +44,13 @@ void APServerHandle(WiFiEvent_t event, WiFiEventInfo_t info) {
             request->send(200, "text/html", "Get SSID and Password successfully ! <br><a href=\"/\">Return to Home Page</a>");
             cleanupEEPROM();
             credentialWriteToEEPROM();
-            delay(10);
-            credentialReadFromEEPROM();
-            delay(10);
-            SwitchWiFiMode(WIFI_STA);
+            SSID = AP_SSID;
+            PASSWORD = AP_PASSWORD;
+            Serial.println("Switching to STA mode");
+            STA_init_check = 1;
         }
     });
-    if(SYSTEM_STATE == 0) webServer.begin();
+    if(SYSTEM_STATE == AP_MODE) webServer.begin();
 }
 
 void ClientMode(WiFiEvent_t event, WiFiEventInfo_t info) {
