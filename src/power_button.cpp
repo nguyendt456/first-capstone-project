@@ -7,7 +7,7 @@ void PowerButtonInit() {
 void PowerButtonTimer() {
     power_button_state1 = power_button_state2;
     power_button_state2 = power_button_state3;
-    power_button_state3 = digitalRead(15);
+    power_button_state3 = digitalRead(POWER_BUTTON);
     if(power_button_state1 == power_button_state2 && power_button_state2 == power_button_state3) {
         if(power_button_state1 != power_button_state) {
             power_button_state = power_button_state1;
