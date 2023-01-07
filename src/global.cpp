@@ -2,6 +2,8 @@
 
 AsyncWebServer webServer(80);
 
+TFT_eSPI tft = TFT_eSPI();
+
 String SSID = "";
 String PASSWORD = "";
 

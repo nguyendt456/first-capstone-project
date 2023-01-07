@@ -4,16 +4,18 @@ void setup() {
     Serial.begin(9600);
     EEPROM.begin(128);
 
+    tft_init();
+
     timer = timerBegin(0, 80, true);
     timerAttachInterrupt(timer, &timerRun, true);
     timerAlarmWrite(timer, 100000, true);
+
     pinMode(POWER_BUTTON, INPUT_PULLUP);
     
     credentialReadFromEEPROM();
+
 	if(WiFiCrentialCheck()) {
-        WiFi.mode(WIFI_AP);
-        WiFi.softAP(SSID.c_str(), PASSWORD.c_str());
-        WiFi.softAPConfig(IP, GATEWAY, NETMASK, DHCP_RANGE);
+        SwitchWiFiAPMode();
         webServer.begin();
     }
 

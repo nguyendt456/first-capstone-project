@@ -7,6 +7,7 @@ void SwitchWiFiSTAMode() {
 }
 
 void SwitchWiFiAPMode() {
+    ap_mode_print();
     WiFi.mode(WIFI_AP);
     WiFi.softAP(DEFAULT_SSID, DEFAULT_PASSWORD);
     WiFi.softAPConfig(IP, GATEWAY, NETMASK, DHCP_RANGE);
@@ -16,11 +17,13 @@ void SwitchWiFiAPMode() {
 void ReconnectOnDisconnect(WiFiEvent_t event, WiFiEventInfo_t info) {
     if (SYSTEM_STATE == STA_MODE) {
         Serial.println("WiFi disconnected. Trying to reconnect !");
+        sta_disconnected_print();
         WiFi.reconnect();
     }
 }
 
 void APServerHandle(WiFiEvent_t event, WiFiEventInfo_t info) {
+    ap_mode_print();
     webServer.on("/", HTTP_GET, [](AsyncWebServerRequest *request){
         request->send_P(200, "text/html", APSetup_html);
     });
@@ -48,6 +51,7 @@ void APServerHandle(WiFiEvent_t event, WiFiEventInfo_t info) {
             PASSWORD = AP_PASSWORD;
             Serial.println("Switching to STA mode");
             STA_init_check = 1;
+            SYSTEM_STATE = STA_MODE;
         }
     });
     if(SYSTEM_STATE == AP_MODE) webServer.begin();
@@ -62,4 +66,5 @@ void ClientMode(WiFiEvent_t event, WiFiEventInfo_t info) {
 
 void HandleOnConnected(WiFiEvent_t event, WiFiEventInfo_t info) {
     Serial.println("I am connected. Do something in here");
+    sta_connected_print();
 }
